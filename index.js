@@ -29,6 +29,29 @@ export const readFile = (extentFile)=>{
     }
 }
 
+//Función para leer y extraer links
+export const readLinks =(extentFile) =>{
+    const lines = extentFile.split('\n'); //separa en lineas el documento
+    let arrayLinks = [];
+    for(let i = 0; i < lines.length; i++){
+        const line = lines[i];
+        const links = line.matchAll(regularEx);
+        const match = regularEx.test(line);
+        if(match){
+            for(const link of links){
+                const data = {
+                    text: link[1],
+                    href: link[2],
+                    file: userPath,
+                    line: i + 1,  
+                };
+                arrayLinks.push(data);
+            }
+        }
+    }
+    return arrayLinks;
+}
+
 
 //Función jefe
 export const mdLinks = (file)=>{
